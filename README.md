@@ -20,9 +20,9 @@ auto_completion/
 ├── main.py                             # Core algorithm & CLI entry point
 ├── json_utilities.py                   # JSON loader & saver helpers
 ├── words.json                          # Dictionary data source
-└── tests/                              # Test suite
+└── tests/                              # Tests
     ├── test_json_utilities.py          # Tests for JSON utilities
-    ├── test_longest_total_sequence.py  # Tests for LCS DP algorithm
+    ├── test_longest_total_sequence.py  # Tests for LCS algorithm
     └── test_main.py                    # Tests for autocompletion and CLI parser
 ```
 
