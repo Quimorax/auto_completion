@@ -1,6 +1,6 @@
 # Auto-Complete CLI
 
-A fast, zero-dependency Python CLI tool for fuzzy word autocompletion. 
+Python CLI tool for word autocompletion.
 
 Instead of relying on rigid exact matches, it uses Dynamic Programming (**Longest Common Subsequence**) to forgive typos and rank suggestions intelligently.
 
@@ -19,7 +19,7 @@ Requires **Python 3.8+**. No external packages needed to run the CLI.
 # Basic search
 python main.py cat
 
-# Custom similarity threshold and result limit
+# Custom minimum similarity and result limit
 python main.py cat --min_similarity 0.6 --top-n 3
 ```
 
