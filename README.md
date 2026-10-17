@@ -1,73 +1,51 @@
 # Auto-Complete CLI
 
-A lightweight Python command-line tool for fuzzy prefix autocompletion using a **Longest Common Subsequence (LCS)** Dynamic Programming algorithm.
+A fast, zero-dependency Python CLI tool for fuzzy word autocompletion. 
 
-## ✨ Features
+Instead of relying on rigid exact matches, it uses Dynamic Programming (**Longest Common Subsequence**) to forgive typos and rank suggestions intelligently.
 
-- **LCS Prefix Matching**: Compares input queries against word prefixes using Dynamic Programming.
-- **Multi-Criteria Ranking**: Results are ordered hierarchically by:
-  1. Exact prefix match priority
-  2. LCS similarity score ($0.0$ to $1.0$)
-  3. Word length penalty
-- **JSON Dictionary**: Loads dictionary entries from standard JSON files
-- **CLI Customization**: Configurable min similarity (`--min_similarity`) and result output limits (`--top-n`).
-- **Unit Testing**: Includes unit tests for the core algorithm, CLI parser, and JSON utilities.
+## ⚡ How It Works
 
-## 📁 Project Structure
+When you type a query, the tool scans `words.json` and ranks candidates based on three rules:
+1. **Exact prefix match** — words starting with your exact query always come first.
+2. **Similarity score** — calculated via LCS against the word's prefix ($0.0$ to $1.0$).
+3. **Length proximity** — shorter, closer matches are favored over long words.
 
-```
-auto_completion/
-├── main.py                             # Core algorithm & CLI entry point
-├── json_utilities.py                   # JSON loader & saver helpers
-├── words.json                          # Dictionary data source
-└── tests/                              # Tests
-    ├── test_json_utilities.py          # Tests for JSON utilities
-    ├── test_longest_total_sequence.py  # Tests for LCS algorithm
-    └── test_main.py                    # Tests for autocompletion and CLI parser
-```
+## 🚀 Usage
 
-## 🚀 Quick Start
+Requires **Python 3.8+**. No external packages needed to run the CLI.
 
-### Requirements
-- Python 3.8+
-- pytest
-
-### Usage
-
-Run autocompletion with a search query:
-
-```cmd
-python main.py <query>
-```
-
-#### Examples
-
-**Basic query:**
-```cmd 
+```bash
+# Basic search
 python main.py cat
-```
 
-**Custom similarity threshold and limit:**
-```cmd
+# Custom similarity threshold and result limit
 python main.py cat --min_similarity 0.6 --top-n 3
 ```
 
-#### CLI Options
+**Example Output:**
+```text
+Query: 'cat' (minimum similarity: 0.6)
+--------------------------------------------------
+#   | Word                 | Similarity | Exact Prefix
+--------------------------------------------------
+1   | cat                  | 1.0        | Yes
+2   | catch                | 1.0        | Yes
+3   | category             | 1.0        | Yes
+```
 
-| Argument | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `query` | `str` | `""` | Search word or prefix |
-| `--min_similarity` | `float` | `0.5` | Minimum similarity score required ($0.0$ – $1.0$) |
-| `--top-n` | `int` | `5` | Maximum number of suggestions to return |
+### Options
 
-## 🧪 Running Tests
+| Argument | Default | Description |
+| :--- | :--- | :--- |
+| `query` | `""` | Word or prefix to autocomplete. |
+| `--min_similarity` | `0.5` | Minimum LCS score required ($0.0$ – $1.0$). |
+| `--top-n` | `5` | Maximum number of suggestions to show. |
 
-Execute the unit test suite using `pytest` or Python's built-in `unittest`:
+## 🧪 Testing
 
-```cmd
-# Using pytest
+The core algorithm, CLI parser, and JSON loaders are covered by unit tests. To run them, install `pytest` and execute:
+
+```bash
 pytest
-
-# Using standard unittest
-python -m unittest discover tests
 ```
